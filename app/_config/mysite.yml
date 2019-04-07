@@ -1,0 +1,24 @@
+---
+Name: myproject
+---
+SilverStripe\Core\Manifest\ModuleManifest:
+  project: app
+
+SilverStripe\Core\Injector\Injector:
+  Psr\Log\LoggerInterface:
+    calls:
+      LogFileHandler: [ pushHandler, [ %$LogFileHandler ] ]
+  LogFileHandler:
+    class: Monolog\Handler\StreamHandler
+    constructor:
+      - "/opt/bitnami/apps/silverstripe/log/silverstripe.log"
+      - "info"
+
+---
+Name: myemailconfig
+After: emailconfig
+---
+SilverStripe\Control\Email\Email:
+  admin_email: user@example.com
+#SilverStripe\Core\Injector\Injector:
+#  Swift_Transport: MySmtpMailTransport
